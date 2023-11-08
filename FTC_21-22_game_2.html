@@ -1,0 +1,475 @@
+<!--DOCTYPE html -->
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
+<link rel="stylesheet" href="ftc.css">
+-->
+<title>FTC Scouting System - Freight Frenzy (21-22)</title>
+<script>
+function chgValue(sId,num) {
+	let x = document.getElementById(sId).value;
+	x = ((x == "NA") ? -1 : x);
+	//alert(x*1+1);
+	x = x*1+num;
+	//alert(x);
+	x = ((x<0) ? "NA" : x);
+	document.getElementById(sId).value = x;
+	//alert(sId.substr(0,4));
+	if (sId.substr(0,4) == "auto") {
+		//alert(sId);
+		//if (
+	}
+}
+function chkSubmit () {
+	//alert("HI");
+	let a = document.getElementById("team").value;
+	//let b = document.getElementById("side").value;
+	let c = document.getElementById("partner").value;
+	//alert(a=="none");
+	
+	if (a=="none" || c=="none") {
+		document.getElementById("submitBtn").disabled = true;
+		//alert("disabled");
+	}else {
+		document.getElementById("submitBtn").disabled = false;
+		//alert("enabled")
+	}
+}
+function botDisabled() {
+	let a = document.getElementById("notFailed").checked;
+	//alert(a);
+	
+	if (a) {
+		document.getElementById("totalFailure").disabled=true;
+		document.getElementById("driveFailure").disabled=true;
+		document.getElementById("freightFailure").disabled=true;
+		document.getElementById("duckFailure").disabled=true;
+		document.getElementById("capFailure").disabled=true;
+		document.getElementById("totalFailure").checked=false;
+		document.getElementById("driveFailure").checked=false;
+		document.getElementById("freightFailure").checked=false;
+		document.getElementById("duckFailure").checked=false;
+		document.getElementById("capFailure").checked=false;	
+		//alert("true")
+	} else {
+		document.getElementById("totalFailure").disabled=false;
+		document.getElementById("driveFailure").disabled=false;
+		document.getElementById("freightFailure").disabled=false;
+		document.getElementById("duckFailure").disabled=false;
+		document.getElementById("capFailure").disabled=false;	
+	}
+}
+function checkToNum() {
+	let x = document.getElementsByClassName("checkConvert");
+	
+	//alert("hi");
+	
+	for (let i=0; i<x.length; i++) {
+		if (x[i].value > 0) {
+			document.getElementById("n_tele" + x[i].id.substr(0,4)).value = 1;
+		}
+	}
+	//alert (document.getElementById("n_teleBall").value);
+	addScores();
+	//alert(document.getElementById("autoScore").value);
+	//alert(document.getElementById("teleScore").value);
+	//alert(document.getElementById("endScore").value);
+	document.getElementById("gameScoutingForm").submit();
+	
+}
+</script>
+<script src="gameScript.js"></script>
+</head>
+
+<body>
+<table>
+	<tr>
+		<td><h2>Game</h2></td>
+		<td><button id="game" style="margin-left:2em" onclick="window.location.href='./FTC_21-22_pre-game_2.html'">Switch to pre-game screen</button></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><button id="game" style="margin-left:2em" onclick="window.location.href='./FTC_21-22_analysis.php'">Switch to analysis screen</button></td>
+	</tr>
+</table><br>
+
+<form id="gameScoutingForm" name="gameScoutingForm" action="./postToFile.php" method="post">
+
+<div id="headingInfo">
+<label for="event">Event &nbsp</label><select id="event" name="event"><option id="2022-2-19" value="02-19-22">Feb 19</option><option id="2021-11-20" value="11-20-21">Nov 20</option><option id="2021-12-18" value="12-18-21">Dec 18</option><option id="2022-1-15" value="01-15-22">Jan 15</option><option id="2022-1-29" value="01-29-22">Jan 29</option></select>
+<br><br>
+<label for="team">Team: &nbsp</label><select id="team" name="team" onchange="chkSubmit()"><option value="none">Select Team</option><option value="535">535</option><option value="4366">4366</option><option value="6518">6518</option><option value="8272">8272</option><option value="8711">8711</option><option value="10621">10621</option><option value="11130">11130</option><option value="11272">11272</option><option value="11992">11992</option><option value="12231">12231</option><option value="13414">13414</option><option value="13750">13750</option><option value="14084">14084</option><option value="15544">15544</option><option value="17012">17012</option><option value="18375">18375</option><option value="18578">18578</option><option value="18638">18638</option><option value="19864">19864</option><option value="19932">19932</option><option value="20689">20689</option></select>
+
+<label for="partner" style="padding-left:1em">Partner: &nbsp</label><select id="partner" name="partner" onchange="chkSubmit()"><option value="none">Select Team</option><option value="535">535</option><option value="4366">4366</option><option value="6518">6518</option><option value="8272">8272</option><option value="8711">8711</option><option value="10621">10621</option><option value="11130">11130</option><option value="11272">11272</option><option value="11992">11992</option><option value="12231">12231</option><option value="13414">13414</option><option value="13750">13750</option><option value="14084">14084</option><option value="15544">15544</option><option value="17012">17012</option><option value="18375">18375</option><option value="18578">18578</option><option value="18638">18638</option><option value="19864">19864</option><option value="19932">19932</option><option value="20689">20689</option></select>
+<br><br>
+<input type="radio" id="redSide" name="side" value="red" checked><label for="redSide">&nbsp Red Alliance</label><br>
+<input type="radio" id="blueSide" name="side" value="blue"><label for="blueSide">&nbsp Blue Alliance</label>
+<br>
+</div>
+
+<div id="autonomus">
+<h3 id="auto">Auto</h3>
+<input type="radio" id="startWh" name="startLoc" value="wh"><label for="startWh">&nbsp Started on warehouse side</label><br>
+<input type="radio" id="startCar" name="startLoc" value="cr" checked><label for="startWh">&nbsp Started on carousel side</label>
+<br><br>
+Shipping Element<br>
+<input type="radio" id="teamElement" name="a_barcodeElement" value="teamElement"><label for="teamElement">&nbsp Used team shipping element on barcode </label><br>
+<input type="radio" id="duckElement" name="a_barcodeElement" value="duckElement" checked><label for="duckElement">&nbsp Used duck element on barcode </label><br>
+<br>
+Preloaded box<br>
+<input type="radio" id="pre-blockHubRight" name="a_preLoad" value="right"><label for="pre-blockHubRight">&nbsp Block delivered to correct hub level</label><br>
+<input type="radio" id="pre-blockHubDelivered" name="a_preLoad" value="hub"><label for="pre-blockHubDelivered">&nbsp Block delivered to hub</label><br>
+<input type="radio" id="autoBlockNotDelivered" name="a_preLoad" value="hubFail"><label for="autoBlockNotDelivered">&nbsp Block failed delivery to hub</label><br>
+<input type="radio" id="pre-blockUnitDelivered" name="a_preLoad" value="unit"><label for="pre-blockUnitDelivered">&nbsp Block delivered to unit</label><br>
+<input type="radio" id="pre-blockUnitNotDelivered" name="a_preLoad" value="unitFail"><label for="pre-blockUnitNotDelivered">&nbsp Block failed delivery to unit</label><br>
+<input type="radio" id="pre-blockUnitNotAttempted" name="a_preLoad" value="not" checked><label for="pre-blockUnitNotAttempted">&nbsp Block not attempted to hub or unit</label><br>
+<br><br>
+Duck delivered to floor<br>
+<input type="radio" id="autoDuckDelivered" name="a_duckAuto" value="floor"><label for="duckDelivered">&nbsp Duck delivered</label><br>
+<input type="radio" id="autoDuckNotDelivered" name="a_duckAuto" value="fail"><label for="duckNotDelivered">&nbsp Duck failed delivery</label><br>
+<input type="radio" id="autoDuckNotAttempted" name="a_duckAuto" value="not" checked><label for="duckNotAttempted">&nbsp Duck not attempted</label><br>
+<input type="radio" id="autoDuckPartnerAttempted" name="a_duckAuto" value="partner" ><label for="duckPartnerAttempted">&nbsp Duck attempted by Partner</label>
+<br><br>
+<table>
+	<tr>
+		<td></td>
+		<td style="text-align:center">Cube</td>
+		<td style="text-align:center">Ball</td>
+	</tr>
+	<tr>
+	<td style="padding-right:.5em">Unit</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('autoCubeUnit',-1)">-</button>
+		<input type="text" id="autoCubeUnit" name="n_autoCubeUnit" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('autoCubeUnit',1)">+</button>
+	</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('autoBallUnit',-1)">-</button>
+		<input type="text" id="autoBallUnit" name="n_autoBallUnit" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('autoBallUnit',1)">+</button>
+	</td>
+	</tr>
+	<tr>
+	<td style="padding-right:.5em">Level 1</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('autoCubeL1',-1)">-</button>
+		<input type="text" id="autoCubeL1" name="n_autoCubeL1" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('autoCubeL1',1)">+</button>
+	</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('autoBallL1',-1)">-</button>
+		<input type="text" id="autoBallL1" name="n_autoBallL1" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('autoBallL1',1)">+</button>
+	</td>
+	</tr>
+	<tr>
+	<td style="padding-right:.5em">Level 2</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('autoCubeL2',-1)">-</button>
+		<input type="text" id="autoCubeL2" name="n_autoCubeL2" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('autoCubeL2',1)">+</button>
+	</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('autoBallL2',-1)">-</button>
+		<input type="text" id="autoBallL2" name="n_autoBallL2" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('autoBallL2',1)">+</button>
+	</td>
+	</tr>
+	<tr>
+	<td style="padding-right:.5em">Level 3</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('autoCubeL3',-1)">-</button>
+		<input type="text" id="autoCubeL3" name="n_autoCubeL3" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('autoCubeL3',1)">+</button>
+	</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('autoBallL3',-1)">-</button>
+		<input type="text" id="autoBallL3" name="n_autoBallL3" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('autoBallL3',1)">+</button>
+	</td>
+	</tr>
+</table>
+<br>
+Duck delivered to storage<br>
+<input type="radio" id="autoDuckHub" name="a_autoDuckStorage" value="hub"><label for="autoDuckHub">&nbsp Duck delivered to hub</label><br>
+<input type="radio" id="autoDuckHubFail" name="a_autoDuckStorage" value="hubFail"><label for="autoDuckHubFail">&nbsp Duck failed delivery to hub</label><br>
+<input type="radio" id="autoDuckUnit" name="a_autoDuckStorage" value="unit"><label for="autoDuckUnit">&nbsp Duck delivered to unit</label><br>
+<input type="radio" id="autoDuckUnitFail" name="a_autoDuckStorage" value="unitFail"><label for="autoDuckUnitFail">&nbsp Duck failed delivery to unit</label><br>
+<input type="radio" id="autoDuckfloor" name="a_autoDuckStorage" value="not" checked><label for="autoDuckfloor">&nbsp Duck left on floor/carousel</label>
+<br><br>
+Parking<br>
+<input type="radio" id="parkInUnit" name="a_autoPark" value="unit" onclick="chgAutoPark('parkInUnit')"><label for="parkInUnit">&nbsp Park in Unit </label><br>
+<input type="radio" id="parkUnitFail" name="a_autoPark" value="unitFail"><label for="parkUnitFail">&nbsp Unit - failed park </label><br>
+<input type="radio" id="parkInWHNear" name="a_autoPark" value="near" onclick="chgAutoPark('parkInWHNear')"><label for="parkInWHNear">&nbsp Park in Warehouse - Near </label><br>
+<input type="radio" id="parkInWHFar" name="a_autoPark" value="far" onclick="chgAutoPark('parkInWHFar')"><label for="parkInWHFar">&nbsp Park in Warehouse - Far </label><br>
+<input type="radio" id="parkInWHShared" name="a_autoPark" value="shared" onclick="chgAutoPark('parkInWHShared')"><label for="parkInWHShared">&nbsp Park in Warehouse - Shared </label><br>
+<input type="radio" id="parkWHFail" name="a_autoPark" value="whFail"><label for="parkWHFail">&nbsp Warehouse - failed park </label><br>
+<input type="radio" id="notPark" name="a_autoPark" value="not" onclick="chgAutoPark('notPark')" checked><label for="notPark">&nbsp Did not attempt Park </label><br>
+<br>
+<input type="checkbox" id="autoPartPark" name="a_autoParkPartial" value="partialPark"><label for="autoPartPark">&nbsp Parked outside lines (Partial park) </label><br>
+<br>
+<input type="radio" id="parkOverBarrier" name="parkBarrier" value="parkOverBarrier"><label for="parkOverBarrier">&nbsp Drove over barrier to park </label><br>
+<input type="radio" id="parkAroundBarrier" name="parkBarrier" value="parkAroundBarrier"><label for="parkAroundBarrier" checked>&nbsp Drove around barrier to park </label><br>
+<br>
+<input type="checkbox" id="parkOnBarrier" name="a_parkOnBarrier" value="barrier"><label for="parkOnBarrier">&nbsp Hung up on barrier during park </label>
+<br><br>
+
+<div id="autoHidden" style="display:none">
+	<!--<input type="text" id="autoUnitCan" name="c_teleUnit" value="never">
+	<input type="text" id="autoL1Can" name="c_teleL1" value="never">-->
+	<input type="text" id="autoScore" name="autoScore" value=0>
+</div>
+</div>
+
+<div id="tele">
+<h3>Tele-op</h3>
+<table>
+	<tr>
+		<td></td>
+		<td style="text-align:center">Cube</td>
+		<td style="text-align:center">Ball</td>
+	</tr>
+	<tr>
+	<td style="text-align:center">Unit</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px .5em;text-align:center" onclick="chgValue('CubeUnit',-1)">-</button>
+		<input type="text" id="CubeUnit" class="checkConvert" name="n_cubeUnit" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('CubeUnit',1)">+</button>
+	</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('BallUnit',-1)">-</button>
+		<input type="text" id="BallUnit" class="checkConvert" name="n_ballUnit" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('BallUnit',1)">+</button>
+	</td>
+	</tr>
+	<tr>
+	<td style="text-align:center">Level 1</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('CubeL1',-1)">-</button>
+		<input type="text" id="CubeL1" class="checkConvert" name="n_cubeL1" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('CubeL1',1)">+</button>
+	</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('BallL1',-1)">-</button>
+		<input type="text" id="BallL1" class="checkConvert" name="n_ballL1" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('BallL1',1)">+</button>
+	</td>
+	</tr>
+	<tr>
+	<td style="text-align:center">Level 2</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('CubeL2',-1)">-</button>
+		<input type="text" id="CubeL2" class="checkConvert" name="n_cubeL2" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('CubeL2',1)">+</button>
+	</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('BallL2',-1)">-</button>
+		<input type="text" id="BallL2" class="checkConvert" name="n_ballL2" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('BallL2',1)">+</button>
+	</td>
+	</tr>
+	<tr>
+	<td style="text-align:center">Level 3</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('CubeL3',-1)">-</button>
+		<input type="text" id="CubeL3" class="checkConvert" name="n_cubeL3" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('CubeL3',1)">+</button>
+	</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('BallL3',-1)">-</button>
+		<input type="text" id="BallL3" class="checkConvert" name="n_ballL3" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('BallL3',1)">+</button>
+	</td>
+	</tr>
+	<tr>
+	<td style="padding-right:.5em">Shared Hub</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('CubeShared',-1)">-</button>
+		<input type="text" id="CubeShared" class="checkConvert" name="n_cubeShared" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('CubeShared',1)">+</button>
+	</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('BallShared',-1)">-</button>
+		<input type="text" id="BallShared" class="checkConvert" name="n_ballShared" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('BallShared',1)">+</button>
+	</td>
+	</tr>
+</table>
+<br>
+<input type="checkbox" id="overBarrier" name="a_overBarrier" value="overBarrier"><label for="overBarrier">&nbsp Drove over Barrier </label><br>
+<input type="checkbox" id="aroundBarrier" name="a_aroundBarrier" value="aroundBarrier"><label for="aroundBarrier">&nbsp Drove around Barrier </label><br>
+
+<div id="teleHidden" style="display:none">
+	<input type="text" id="n_teleCube" name="n_teleCube" value=0>
+	<input type="text" id="n_teleBall" name="n_teleBall" value=0>
+	<input type="text" id="n_teleDuck" name="n_teleDuck" value=0>
+	<input type="text" id="n_overBarrier" name="n_overBarrier" value=0>
+	<input type="text" id="n_aroundBarrier" name="n_aroundBarrier" value=0>
+	<input type="text" id="teleScore" name="teleScore" value=0>
+	<input type="text" id="hubScore" name="hubScore" value=0>
+	<input type="text" id="sharedScore" name="sharedScore" value=0>
+</div>
+
+</div>
+
+<div id="end">
+<h3 id="endGame">End game</h3>
+<input type="radio" id="duckAttempted" name="a_endDucks" value="tried"><label for="duckAttempted">&nbsp Attempted ducks </label><br>
+<input type="radio" id="duckPartner" name="a_endDucks" value="partner" checked><label for="duckPartner">&nbsp Partner atempted ducks </label><br>
+<input type="radio" id="duckNotAttempted" name="a_endDucks" value="not"><label for="duckNotAttempted">&nbsp Ducks not attempted </label>
+<br><br>
+<table>
+	<tr>
+		<td></td>
+		<td style="text-align:center">Duck/Element</td>
+	</tr>
+	<tr>
+	<td style="padding-right:.5em">Floor</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('duckFloor',-1)">-</button>
+		<input type="text" id="duckFloor" name="n_duckFloor" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('duckFloor',1)">+</button>
+	</td>
+	</tr>
+	<tr>
+	<td style="text-align:center">Unit</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('duckUnit',-1)">-</button>
+		<input type="text" id="duckUnit" name="n_duckUnit" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('duckUnit',1)">+</button>
+	</td>
+	</tr>
+	<tr>
+	<td style="text-align:center">Level 1</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('duckL1',-1)">-</button>
+		<input type="text" id="duckL1" name="n_duckL1" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('duckL1',1)">+</button>
+	</td>
+	</tr>
+	<tr>
+	<td style="text-align:center">Level 2</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('duckL2',-1)">-</button>
+		<input type="text" id="duckL2" name="n_duckL2" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('duckL2',1)">+</button>
+	</td>
+	</tr>
+	<tr>
+	<td style="text-align:center">Level 3</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('duckL3',-1)">-</button>
+		<input type="text" id="duckL3" name="n_duckL3" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('duckL3',1)">+</button>
+	</td>
+	</tr>
+</table>
+<br>
+
+<input type="radio" id="capped" name="hubCapped" value="capped"><label for="capped">&nbsp Hub capped </label><br>
+<input type="radio" id="cappedBoth" name="hubCapped" value="both"><label for="cappedBoth">&nbsp Capped both elements </label><br>
+<input type="radio" id="notCapped" name="hubCapped" value="notCapped"><label for="notCapped">&nbsp  Hub not capped </label><br>
+<input type="radio" id="capNotTried" name="hubCapped" value="capNotTried" checked><label for="capNotTried">&nbsp  Cap not tried </label><br><br>
+
+<input type="checkbox" id="capOnPartner" name="a_capOnPartner" value="capOnPartner"><label for="capOnPartner">&nbsp  Placed on parnter cap </label><br>
+<input type="checkbox" id="capPartnerPrevent" name="capPartnerPrevent" value="capPartnerPrevent"><label for="capPartnerPrevent">&nbsp  Parnter cap prevented capping </label><br>
+<input type="checkbox" id="partnerOnCap" name="a_partnerOnCap" value="partnerOnCap"><label for="partnerOnCap">&nbsp  Parnter cap on top of cap </label><br>
+<input type="checkbox" id="partnerPrevent" name="a_partnerPrevent" value="partnerPrevent"><label for="partnerPrevent">&nbsp  Cap prevented parter from capping </label><br>
+<br>
+<input type="radio" id="fullEndPark" name="endPark" value="full"><label for="fullEndPark">&nbsp  Fully parked in Warehouse </label><br>
+<input type="radio" id="partEndPark" name="endPark" value="part"><label for="partEndPark">&nbsp  Partially parked in Warehouse </label><br>
+<input type="radio" id="notEndPark" name="endPark" value="not" checked><label for="notEndPark">&nbsp  Not parked in Warehouse </label><br>
+
+</div>
+
+<div id="final">
+<h3>Final</h3>
+<input type="checkbox" id="hubBallanced" name="hubBallanced" value="hubBallanced"><label for="hubBallanced">&nbsp  Hub ballanced </label><br>
+<input type="checkbox" id="SharedUnballanced" name="SharedUnballanced" value="SharedUnballanced"><label for="SharedUnballanced">&nbsp  Shared hub unballanced (in-favor) </label>
+<br><br>
+<table>
+	<tr>
+		<td style="text-align:center">Minor penalty</td>
+		<td style="text-align:center">Major penalty</td>
+	</tr>
+	<tr>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('minor',-1)">-</button>
+		<input type="text" id="minor" name="n_minor" value="0" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('minor',1)">+</button>
+	</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('major',-1)">-</button>
+		<input type="text" id="major" name="n_major" value="0" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('major',1)">+</button>
+	</td>
+	</tr>
+</table>
+<br>
+<input type="radio" id="win" name="result" value="win"><label for="win">&nbsp  Match won</label>
+<input type="radio" id="loss" name="result" value="loss"><label for="loss">&nbsp  Match lost</label>
+<input type="radio" id="tie" name="result" value="tie" checked><label for="tie">&nbsp  Match tied</label>
+<br><br>
+<label for="allianceTotal" style="padding-right:.5em">&nbsp  Alliance total score</label><input type="text" id="allianceTotal" name="allianceTotal" value=0 size="5" style="font-size:12px;text-align:center"><br>
+<label for="opponentTotal" style="padding-top:0.5em;padding-right:.5em">&nbsp  Opponent total score</label><input type="text" id="opponentTotal" name="opponentTotal" value=0 size="5" style="margin-top:1em;font-size:12px;text-align:center">
+
+<div id="endHidden" style="display:none">
+	<input type="text" id="endScore" name="endScore" value=0>
+</div>
+</div>
+
+<div id="notes">
+<h3>General notes</h3>
+<input type="radio" id="notFailed" name="a_failed" value="notFailed" onclick="botDisabled()" checked><label for="notFailed">&nbsp  Robot didn't fail</label><br>
+<input type="radio" id="autoFailed" name="a_failed" value="autoFailed" onclick="botDisabled()"><label for="autoFailed">&nbsp  Robot failed during auto</label><br>
+<input type="radio" id="teleFailed" name="a_failed" value="teleFailed" onclick="botDisabled()"><label for="teleFailed">&nbsp  Robot failed during tele-op</label><br><br>
+<div style="margin-left:2em">
+<input type="checkbox" id="totalFailure" name="a_totalFailure" value="true" disabled=true><label for="totalFailure">&nbsp  Total failure </label><br>
+<input type="checkbox" id="driveFailure" name="a_driveFailure" value="true" disabled=true><label for="driveFailure">&nbsp  Drivetrain failed </label><br>
+<input type="checkbox" id="freightFailure" name="a_freightFailure" value="true" disabled=true><label for="freightFailure">&nbsp  Freight system failed </label><br>
+<input type="checkbox" id="duckFailure" name="a_duckFailure" value="true" disabled=true><label for="duckFailure">&nbsp  Duck system failed </label><br>
+<input type="checkbox" id="capFailure" name="a_capFailure" value="true" disabled=true><label for="capFailure">&nbsp  Cap system failed </label>
+</div>
+<br>
+<input type="radio" id="driveGreat" name="drive" value="driveGreat"><label for="driveGreat">&nbsp  Drives great</label><br>
+<input type="radio" id="driveWell" name="drive" value="driveWell" checked><label for="driveWell">&nbsp  Drives well</label><br>
+<input type="radio" id="driveOk" name="drive" value="driveOk"><label for="driveOk">&nbsp  Drives ok</label>
+<br><br>
+<input type="checkbox" id="stuck" name="a_stuckPerm" value="true"><label for="stuck">&nbsp  Robot stuck on barrier - Permanent/needed help</label><br>
+<input type="checkbox" id="stuckTemp" name="a_stuckTemp" value="true"><label for="stuckTemp">&nbsp  Robot stuck on barrier - Temp/self freed</label><br>
+</div>
+<br><br>
+<button type="button" id="submitBtn" onclick="checkToNum()" disabled=true>Submit data</button><button type="reset" id="reset" value="reset" style="margin-left:1em">Reset data</button>
+</form>
+<br>
+<script>
+//alert("Loaded");
+const t = new Date();
+let d = t.getDate();
+let m = t.getMonth()+1;
+let y = t.getFullYear();
+/*
+let dmy = m + "-" + d + "-" + y.toString().substr(2,2);
+
+//alert(y.toString().substr(2,2));
+//alert(document.getElementById("event").options.length);
+//document.getElementById("event").selectedIndex = 2;
+for (let i=0; i<document.getElementById("event").options.length; i++) {
+	let a = document.getElementById("event").options[i].value;
+	//alert(a);
+	//alert(dmy);
+	if (a == dmy) {
+		document.getElementById("event").selectedIndex = i;
+	}
+}
+*/
+if (document.getElementById("event").options.namedItem(y + "-" + m + "-" + d)) {
+	//alert(document.getElementById(y + "-" + m + "-" + d));
+	document.getElementById("event").options.namedItem(y + "-" + m + "-" + d).selected = "selected";
+}
+
+
+</script>
+</body>
+</html>

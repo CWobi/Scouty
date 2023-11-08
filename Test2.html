@@ -1,0 +1,263 @@
+<!--DOCTYPE html -->
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
+<link rel="stylesheet" href="ftc.css">
+-->
+<title>FTC Scouting System - Centerstage (23-24)</title>
+
+<script>
+	var tab=1;
+
+	function chgValue(sId,num) {
+		let x = document.getElementById(sId).value;
+		x = ((x == "NA") ? -1 : x);
+		//alert(x*1+1);
+		x = x*1+num;
+		//alert(x);
+		x = ((x<0) ? "NA" : x);
+		document.getElementById(sId).value = x;
+		//alert(sId.substr(0,4));
+		if (sId.substr(0,4) == "auto") {
+			//alert(sId);
+			//if (
+		}
+	}
+	
+	function swishy() {
+		if(tab==2) {
+			document.getElementById("AutoDiv").style.display="block"
+			document.getElementById("TeleOpDiv").style.display="none"
+			tab=1 
+			document.getElementsByClassName("tab").disabled=false 
+			
+		} else if(tab==3) {
+			document.getElementById("TeleOpDiv").style.display="block"
+			document.getElementById("EndGameDiv").style.display="none"
+			tab=2
+			document.getElementsByClassName("tab").disabled=true
+		} 
+	}
+	function swashy() {
+		//alert(tab)
+		
+		if(tab==2) {
+			document.getElementById("EndGameDiv").style.display="block"
+			document.getElementById("TeleOpDiv").style.display="none"
+			tab=3
+			document.getElementsByClassName("tab").disabled=false
+		} else if(tab==1) {
+			//alert(document.getElementById("TeleOp").style.display)
+			document.getElementById("TeleOpDiv").style.display="block"
+			document.getElementById("AutoDiv").style.display="none"
+			//alert(document.getElementById("TeleOp").style.display)
+			tab=2
+			//alert(tab)
+			document.getElementsByClassName("tab").disabled=true
+			
+		} 
+	}
+</script>
+<style>
+	body{
+		background-color: black;
+		color: lightcoral;
+	}
+
+	.hh1 {
+		color: cornflowerblue;
+	}
+
+	.hh2 {
+		color: mediumpurple;
+	}
+</style>
+</head>
+<body>
+
+	<!--<form id="gameScoutingForm" name="gameScoutingForm" action="./postToFile.php" method="post">-->
+	<form id="gameScoutingForm" name="gameScoutingForm" action="" method="post">
+<!--<h1>FTC Scouting System - Centerstage (23-24)</h1>-->
+
+<div class="hh1" style="color: cornflowerblue; font-size: 26px;text-align:left">Pre-Game:</div>
+
+<label for="Team Number">Team Number: &nbsp</label><select id="Team Number" name="Team Number"><option id="535" value="Tobor">535</option><option id="4366" value="Westside Gold">4366</option><option id="6518" value="Westside Black">6518</option><option id="19932" value="Westside Red">19932</option><option id="21931" value="Westside Gray">21931</option></select>
+<br>
+<label for="event">Event Date: &nbsp</label><select id="event" name="event"><option id="2024-1-27" value="01-27-24">Jan 27</option></select>
+<br>
+<label for="Match Number">Match Number: &nbsp</label><select id="Match Number" name="Match Number"><option id="1" value="M1">1</option><option id="2" value="M2">2</option><option id="3" value="M3">3</option><option id="4" value="M4">4</option><option id="5" value="M5">5</option></select>
+<br>
+
+<input type="radio" id="redSide" name="side" value="red" checked><label for="redSide">&nbsp Red Alliance</label><br>
+<input type="radio" id="blueSide" name="side" value="blue"><label for="blueSide">&nbsp Blue Alliance</label>
+
+<div id="AutoDiv">
+<div class="hh1" style="font-size: 26px;text-align:left">Auto:</div>
+
+<i><div class="hh2" style="font-size: 19px;text-align:left">Using Team Prop:</div></i>
+<input type="radio" id="propY" name="teamProp" value="Y"> <label for="teamProp">&nbsp Yes</label><br>
+<input type="radio" id="propN" name="teamProp" value="N"> <label for="teamProp">&nbsp No</label><br>
+<br>
+<i><div class="hh2" style="font-size: 19px;text-align:left">Starting Place:</div></i>
+<input type="radio" id="startBs" name="startLoc" value="Bs"> <label for="startBs">&nbsp Started Backstage</label><br>
+<input type="radio" id="startAs" name="startLoc" value="As"> <label for="startAs">&nbsp Started Audience Side</label><br>
+<br>
+<i><div class="hh2" style="font-size: 19px;text-align:left">Backstage Park:</div></i>
+<input type="radio" id="parkNa" name="endLoc" value="Na"> <label for="parkNa">&nbsp No Park</label><br>
+<input type="radio" id="parkLe" name="endLoc" value="Le"> <label for="parkLe">&nbsp Parks Left of Backdrop</label><br>
+<input type="radio" id="parkInF" name="endLoc" value="InF"> <label for="parkInF">&nbsp Parks In Front of Backdrop</label><br>
+<input  type="radio" id="parkRi" name="endLoc" value="Ri"> <label for="parkRi">&nbsp Parks Right of Backdrop</label><br>
+<br>
+<i><div class="hh2" style="font-size: 19px;text-align:left">Pixel In Backstage Area:</div></i>
+<input type="radio" id="pixelNBs" name="pixelBs" value="NBs"> <label for="pixelNBs">&nbsp Pixel Not Backstage</label><br>
+<input type="radio" id="pixelIBs" name="pixelBs" value="IBs"> <label for="pixelIBs">&nbsp Pixel In Backstage</label><br>
+<tr>
+	<td style="text-align:center">How Many</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px .5em;text-align:center" onclick="chgValue('PixelBackstage',-1)">-</button>
+		<input type="text" id="PixelBackstage" class="checkConvert" name="n_pixelBackstage" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('PixelBackstage',1)">+</button>
+	</td>
+</tr>
+<br><br>
+<i><div class="hh2" style="font-size: 19px;text-align:left">Pixel On Backdrop:</div></i>
+<input type="radio" id="pixelNBd" name="pixelBd" value="NBd"> <label for="pixelNBd">&nbsp Pixel Not on Backdrop</label><br>
+<input type="radio" id="pixelOBd" name="pixelBd" value="OBd"> <label for="pixelOBd">&nbsp Pixel on Backdrop</label><br>
+<tr>
+	<td style="text-align:center">How Many</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px .5em;text-align:center" onclick="chgValue('PixelOnBackdrop',-1)">-</button>
+		<input type="text" id="PixelOnBackdrop" class="checkConvert" name="n_pixelOnBackdrop" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('PixelOnBackdrop',1)">+</button>
+	</td>
+</tr>
+<br><br>
+<i><div class="hh2" style="font-size: 19px;text-align:left">Color On Spike Mark:</div></i>
+<input type="radio" id="pixelOSM" name="pixelOSM" value="OSM"> <label for="pixelOSM">&nbsp Purple On Spike Mark</label><br>
+<tr>
+	<td style="text-align:center">How Many</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px .5em;text-align:center" onclick="chgValue('PurpleOnSpikeMark',-1)">-</button>
+		<input type="text" id="PurpleOnSpikeMark" class="checkConvert" name="n_pixelOnBackdrop" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('PurpleOnSpikeMark',1)">+</button>
+	</td>
+</tr><br>
+<input type="radio" id="pixelOSM" name="pixelOSM" value="OSM"> <label for="pixelOSM">&nbsp Yellow On Spike Mark</label><br>
+<tr>
+	<td style="text-align:center">How Many</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px .5em;text-align:center" onclick="chgValue('YellowOnSpikeMark',-1)">-</button>
+		<input type="text" id="YellowOnSpikeMark" class="checkConvert" name="n_pixelOnBackdrop" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('YellowOnSpikeMark',1)">+</button>
+	</td>
+</tr>
+</div>
+
+<div id="TeleOpDiv" style="display: none;">
+
+<div class="hh1" style="font-size: 26px;text-align:left">TeleOP:</div>
+
+<i><div class="hh2" style="font-size: 19px;text-align:left">Pixel In Backstage Area:</div></i>
+<tr>
+	<td style="text-align:center">How Many</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px .5em;text-align:center" onclick="chgValue('TOPixelBackstage',-1)">-</button>
+		<input type="text" id="TOPixelBackstage" class="checkConvert" name="n_pixelBackstage" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('TOPixelBackstage',1)">+</button>
+	</td>
+</tr>
+<br><br>
+<i><div class="hh2" style="font-size: 19px;text-align:left">Pixel On Backdrop:</div></i>
+<tr>
+	<td style="text-align:center">How Many</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px .5em;text-align:center" onclick="chgValue('TOPixelOnBackdrop',-1)">-</button>
+		<input type="text" id="TOPixelOnBackdrop" class="checkConvert" name="n_TOpixelOnBackdrop" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('TOPixelOnBackdrop',1)">+</button>
+	</td>
+</tr>
+<br><br>
+
+<i><div class="hh2" style="font-size: 19px;text-align:left">Mosaics:</div></i>
+<tr>
+	<td style="text-align:center">How Many</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px .5em;text-align:center" onclick="chgValue('Mosaics',-1)">-</button>
+		<input type="text" id="Mosaics" class="checkConvert" name="n_Mosaics" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('Mosaics',1)">+</button>
+	</td>
+</tr>
+<br><br>
+
+<i><div class="hh2" style="font-size: 19px;text-align:left">Backstage Route:</div></i>
+<input type="checkbox" id="routeIn" name="routeIn" value="In"> <label for="parkNa">&nbsp Inside Route</label><br>
+<input type="checkbox" id="routeOu" name="routeOu" value="Ou"> <label for="parkLe">&nbsp Outside Route</label><br>
+<input type="checkbox" id="routeIS" name="routeIS" value="IS"> <label for="parkInF">&nbsp Independant Stage Door</label><br>
+<input  type="checkbox" id="routeDS" name="routeDS" value="DS"> <label for="parkRi">&nbsp Dependant Stage Door</label><br><br>
+
+<i><div class="hh2" style="font-size: 19px;text-align:left">Pixels Carried At A Time:</div></i>
+<input type="radio" id="pixelO" name="PixelC" value="O"> <label for="pixelO">&nbsp One</label><br>
+<input type="radio" id="pixelT" name="PixelC" value="T"> <label for="pixelT">&nbsp Two</label><br><br>
+
+<i><div class="hh2" style="font-size: 19px;text-align:left">Pixels Descored:</div></i>
+<tr>
+	<td style="text-align:center">How Many</td>
+	<td style="padding:10px">
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px .5em;text-align:center" onclick="chgValue('PixelsD',-1)">-</button>
+		<input type="text" id="PixelsD" class="checkConvert" name="n_PixelsD" value="NA" size="3" style="font-size:12px;text-align:center" readonly>
+		<button type="button" id="plusMinus" style="font-size:12px;padding:3px 5px;text-align:center" onclick="chgValue('PixelsD',1)">+</button>
+	</td>
+</tr>
+</div>
+
+<div id="EndGameDiv" style="display: none;">
+<div class="hh1" style="font-size: 26px;text-align:left">EndGame:</div>
+
+<i><div class="hh2" style="font-size: 19px;text-align:left">Rigging:</div></i>
+<input type="checkbox" id="HangNa" name="Hang" value="Na"> <label for="HangNa">&nbsp None</label><br>
+<input type="checkbox" id="HangIn" name="Hang" value="In"> <label for="HangIn">&nbsp Inside Hang</label><br>
+<input type="checkbox" id="HangOu" name="Hang" value="Ou"> <label for="HangOu">&nbsp Outside Hang</label><br><br>
+
+<i><div class="hh2" style="font-size: 19px;text-align:left">Parked Backstage:</div></i>
+<input type="radio" id="ParkY" name="EGPark" value="Y"> <label for="ParkY">&nbsp Yes</label><br>
+<input type="radio" id="ParkN" name="EGPark" value="N"> <label for="ParkN">&nbsp No</label><br><br>
+
+<i><div class="hh2" style="font-size: 19px;text-align:left">Drone Launch:</div></i>
+<input type="checkbox" id="DroneNa" name="DroneNa" value="Na"> <label for="DroneNa">&nbsp No launch</label><br>
+<input  type="checkbox" id="Drone0" name="Drone0" value="0"> <label for="Drone30">&nbsp 0pt Launch (Not Successful)</label><br>
+<input type="checkbox" id="Drone10" name="Drone10" value="10"> <label for="Drone10">&nbsp 10pt Launch</label><br>
+<input type="checkbox" id="Drone20" name="Drone20" value="20"> <label for="Drone20">&nbsp 20pt Launch</label><br>
+<input  type="checkbox" id="Drone30" name="Drone30" value="30"> <label for="Drone30">&nbsp 30pt Launch</label><br><br>
+
+<div id="notes">
+<div class="hh1" style="font-size: 26px;text-align:left">General Notes:</div>
+	<input type="radio" id="notFailed" name="a_failed" value="notFailed" onclick="botDisabled()" checked><label for="notFailed">&nbsp  Robot didn't fail</label><br>
+	<input type="radio" id="autoFailed" name="a_failed" value="autoFailed" onclick="botDisabled()"><label for="autoFailed">&nbsp  Robot failed during auto</label><br>
+	<input type="radio" id="teleFailed" name="a_failed" value="teleFailed" onclick="botDisabled()"><label for="teleFailed">&nbsp  Robot failed during tele-op</label><br><br>
+	<div style="margin-left:2em">
+	<input type="checkbox" id="totalFailure" name="a_totalFailure" value="true" disabled=true><label for="totalFailure">&nbsp  Total Tailure </label><br>
+	<input type="checkbox" id="driveFailure" name="a_driveFailure" value="true" disabled=true><label for="driveFailure">&nbsp  Drivetrain Failed </label><br>
+	<input type="checkbox" id="carriageFailure" name="a_carriageFailure" value="true" disabled=true><label for="carriageFailure">&nbsp Carriage System Failed </label><br>
+	<input type="checkbox" id="rigFailure" name="a_rigFailure" value="true" disabled=true><label for="rigFailure">&nbsp  Rigging System Failed </label><br>
+	<input type="checkbox" id="droneFailure" name="a_droneFailure" value="true" disabled=true><label for="droneFailure">&nbsp  Drone System Failed </label>
+	</div>
+	<br>
+	<input type="radio" id="driveGreat" name="drive" value="driveGreat"><label for="driveGreat">&nbsp  Drives great</label><br>
+	<input type="radio" id="driveWell" name="drive" value="driveWell" checked><label for="driveWell">&nbsp  Drives well</label><br>
+	<input type="radio" id="driveOk" name="drive" value="driveOk"><label for="driveOk">&nbsp  Drives ok</label>
+	<br><br>
+	<button type="submit">Submit</button>
+</div>
+</div>
+<br>
+<button class="tab" onclick="swishy()" style="margin-right: 1.5em;"> prev </button>
+<button class="tab" onclick="swashy()"> next </button>
+</form>
+<br>
+
+
+
+</body>
+
+</html>

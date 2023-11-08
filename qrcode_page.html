@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" conent="width=device-width.initial-scale=1.0" />
+	
+	<title>QR Code Page</title>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+	
+	<script>
+		function generateQrCode(qrContent) {
+			//alert(qrContent)
+			return new QRCode("qr-code", {
+				text: qrContent,
+				width: 256,
+				height: 256,
+				colorDark: "#000000",
+				colorLight: "#ffffff",
+				correctLevel: QRCode.CorrectLevel.L //L, M, Q, H
+			})
+		}
+	</script>
+
+</head>
+<body>
+	<header>
+		<h1>QR codes</h1>
+	</header>
+	
+	<main>
+		<h3>Static QR code</h3>
+		<div id="qrcode"></div>
+		<br><br><br>
+		<h3>Dynamic QR code</h3>
+		<input type="text" name="qr-code-content" id="qr-content" value="" placeholder="Enter QR Content" autocomplete="off" />
+		<button id="sButton">Generate Code</button>
+		<br><br>
+		<div id="qr-code"></div>
+		
+		
+	</main>
+	
+	<script>
+		var qrcode = new QRCode("qrcode", "QR code data here");
+	</script>
+	<script>
+		let qrCode
+		let subButton = document.getElementById("sButton")
+		
+		subButton.addEventListener("click", function () {
+			let qrContentIn = document.getElementById("qr-content").value
+			if (qrCode == null) {
+				qrCode = generateQrCode(qrContentIn)
+				//alert (qrCode)
+			} else {
+				qrCode.makeCode(qrContentIn)
+			}
+		})
+	</script>
+</body>
+
+</html>
