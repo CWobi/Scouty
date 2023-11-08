@@ -1,0 +1,35 @@
+<!--DOCTYPE html -->
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<button type="button" id="submitBtn" onclick="generateQrCode('stoof')">Submit data</button>
+<div id="qr-code"></div>
+
+<script>
+    var qrCode
+document.getElementById('submitBtn').addEventListener('click', function(e) {
+    e.preventDefault()
+        var data=new FormData(document.getElementById("gameScoutingForm"))
+        var cool=JSON.stringify("stuff")
+        console.log(cool)
+        qrCode = generateQrCode(cool)
+        document.getElementById('qr-code').style.display="block"
+})
+
+    function generateQrCode(qrContent) {
+        //alert(qrContent)
+        return new QRCode("qr-code", {
+            text: qrContent,
+            width: 256,
+            height: 256,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.L //L, M, Q, H
+            
+        })
+        qrCode = generateQrCode(cool)
+        document.getElementById('qr-code').style.display="block"
+    }
+</script>
+</head>
+</html>
