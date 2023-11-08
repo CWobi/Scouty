@@ -49,14 +49,14 @@
 <body>
 
 	<!--<form id="gameScoutingForm" name="gameScoutingForm" action="./postToFile.php" method="post">-->
-	<form id="gameScoutingForm" name="gameScoutingForm" action="" method="post">
+	<form id="gameScoutingForm" name="gameScoutingForm" action="QrPage.html" method="post">
 <!--<h1>FTC Scouting System - Centerstage (23-24)</h1>-->
 
 <div class="hh1" style="color: cornflowerblue; font-size: 26px;text-align:left">Pre-Game:</div>
 
-<label for="Team Number">Team Number: &nbsp</label><select id="Team Number" name="Team Number"><option id="535" value="Tobor">535</option><option id="4366" value="Westside Gold">4366</option><option id="6518" value="Westside Black">6518</option><option id="19932" value="Westside Red">19932</option><option id="21931" value="Westside Gray">21931</option></select>
+<label for="team">Team: &nbsp</label><select id="team" name="team" onchange="chkSubmit()"><option value="none">Select Team</option><option value="535">535</option><option value="3537">3537</option><option value="4366">4366</option><option value="6190">6190</option><option value="6194">6194</option><option value="6518">6518</option><option value="7193">7193</option><option value="7234">7234</option><option value="8149">8149</option><option value="8272">8272</option><option value="8435">8435</option><option value="8578">8578</option><option value="8791">8791</option><option value="8793">8793</option><option value="8971">8971</option><option value="9864">9864</option><option value="10293">10293</option><option value="10455">10455</option><option value="10621">10621</option><option value="10755">10755</option><option value="11262">11262</option><option value="11272">11272</option><option value="11329">11329</option><option value="11959">11959</option><option value="11992">11992</option><option value="12014">12014</option><option value="12130">12130</option><option value="12231">12231</option><option value="13246">13246</option><option value="13295">13295</option><option value="13377">13377</option><option value="13414">13414</option><option value="13750">13750</option><option value="14084">14084</option><option value="14596">14596</option><option value="14954">14954</option><option value="15455">15455</option><option value="17012">17012</option><option value="17994">17994</option><option value="18174">18174</option><option value="18505">18505</option><option value="18638">18638</option><option value="19366">19366</option><option value="19932">19932</option><option value="20689">20689</option><option value="21478">21478</option><option value="21624">21624</option><option value="21751">21751</option><option value="21894">21894</option><option value="21931">21931</option><option value="21945">21945</option><option value="22049">22049</option><option value="22066">22066</option><option value="22067">22067</option><option value="22068">22068</option><option value="22069">22069</option><option value="22132">22132</option><option value="22331">22331</option><option value="22444">22444</option><option value="22478">22478</option><option value="22871">22871</option><option value="23912">23912</option><option value="24044">24044</option><option value="24102">24102</option><option value="24178">24178</option><option value="24202">24202</option><option value="24289">24289</option><option value="24546">24546</option><option value="24549">24549</option></select>
 <br>
-<label for="event">Event Date: &nbsp</label><select id="event" name="event"><option id="2024-1-27" value="01-27-24">Jan 27</option></select>
+<label for="event">Event Date: &nbsp</label><select id="event" name="event"><option id="2024-1-27" value="01-27-24">Jan 27</option><option id="2024-2-18" value="02-18-24">Feb 18</option><option id="2024-03-09" value="03-09-24">Mar 9</option></select>
 <br>
 <label for="Match Number">Match Number: &nbsp</label><select id="Match Number" name="Match Number"><option id="1" value="M1">1</option><option id="2" value="M2">2</option><option id="3" value="M3">3</option><option id="4" value="M4">4</option><option id="5" value="M5">5</option></select>
 <br>
@@ -220,8 +220,7 @@
 	<input type="radio" id="driveOk" name="drive" value="driveOk"><label for="driveOk">&nbsp  Drives ok</label>
 	<br><br>
 	<div id="qr-code" style="display: none; width: min-content;"></div>
-	<button type="button" id="submitBtn" onclick="checkToNum()">Submit data</button><button type="reset" id="reset" onclick="uncool()" value="reset" style="margin-left:1em">Reset data</button>
-	
+	<button type="button" id="submitBtn" onclick="checkToNum">Submit data</button><button type="reset" id="reset" onclick="uncool()" value="reset" style="margin-left:1em">Reset data</button>
 </div>
 </div>
 <br>
@@ -236,7 +235,10 @@
 <br>
 <br>
 
+
 <script>
+
+
 	var tab=1;
 	var qrCode
 	function chgValue(sId,num) {
@@ -310,6 +312,7 @@
 			console.log(cool)
 			qrCode = generateQrCode(cool)
 			document.getElementById('qr-code').style.display="block"
+			checkToNum(cool)
 	})
 </script>
 
