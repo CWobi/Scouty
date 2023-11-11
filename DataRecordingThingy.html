@@ -1,0 +1,40 @@
+<html>
+<head>
+
+</head>
+
+<body>
+    <form id="Tea">
+        <label for="Beck">Text:</label>
+
+        <input type="text" id="Beck" name="Beck" required minlength="0" maxlength="99999999" size="10" />
+    </form>
+    <button type="button" id="Xport">Export Data</button>
+    <script src="https://cdn.jsdelivr.net/npm/pouchdb@8.0.1/dist/pouchdb.min.js"></script>
+    <script>
+      var db = new PouchDB('my_database');
+      function Spill(event){
+            event.preventDefault()
+            const value=document.getElementById("Beck").value
+            const data=JSON.parse(value)
+            data._id=new Date().toISOString() + Math.random()
+            db.put(data)
+        }
+
+      const form=document.getElementById("Tea")
+      form.addEventListener("submit",Spill)
+
+       async function Aaron(){
+            const entries=await db.allDocs({include_docs:true})     
+            if(entries.rows.length>0){
+                let CSV=Object.keys(entries.rows[0].doc).join(",")+"\n"
+                console.log(CSV)
+            }
+        }
+
+        document.getElementById("Xport").addEventListener("click", Aaron)
+    </script>
+</body>
+
+
+</html>
